@@ -1,9 +1,13 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs/promises");
+const { generateHTML } = require("./src/generateHTML");
+
+var cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 const port = 9000;
@@ -15,49 +19,13 @@ app.get("/", function (req, res) {
 });
 
 app.post("/generate", async function (req, res, next) {
-  console.log("req", req.body);
+  // console.log("req", req.body);
   try {
-    const result1 = req.body.elements.map((element, index, arr) => {
-      if (element.type === "imageBlock") {
-        // if (arr[index + 1]?.type === "imageBlock") {
-        //   return getRowWithTwoBlocks({
-        //     item1: item({
-        //       subtitle: element.subtitle,
-        //       link: element.link,
-        //       image: element.image,
-        //       title: element.title,
-        //     }),
-        //     item2: item({
-        //       subtitle: arr[index + 1].subtitle,
-        //       link: arr[index + 1].link,
-        //       image: arr[index + 1].image,
-        //       title: arr[index + 1].title,
-        //     }),
-        //   });
-        // }
-
-        // if (arr[index - 1]?.type === "imageBlock") {
-        //   return undefined;
-        // }
-
-        return getRowWithTwoBlocks({
-          item1: item({
-            subtitle: element.subtitle,
-            link: element.link,
-            image: element.image,
-            title: element.title,
-          }),
-        });
-      }
-    });
-
-    const content = generateFullTemplate({
-      elements: result1.join(" "),
-    });
+    const generatedHTML = generateHTML(req.body.treeData);
 
     await fs.writeFile(
       path.join(__dirname, "public/generated/nmtgTemplate.html"),
-      content
+      generatedHTML
     );
   } catch (err) {
     console.log(err);
