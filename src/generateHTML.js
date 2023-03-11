@@ -23,4 +23,4 @@ const generateHTML = (treeData) => {
   return getValue(treeData[0].children, treeData[0].value);
 };
 
-module.exports = { generateHTML };
+export { generateHTML };
