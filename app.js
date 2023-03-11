@@ -55,6 +55,36 @@ app.post("/save-template-tree", async (req, res) => {
   res.status(200).send();
 });
 
+const updateItem = (itemToUpdate1, treeData1) => {
+  const findAndUpdateItem = (treeData) => {
+    treeData.forEach((item) => {
+      if (item.key === itemToUpdate1.key) {
+        item.value = itemToUpdate1.value;
+      }
+
+      if (!item.children) {
+        return;
+      }
+
+      findAndUpdateItem(item.children);
+    });
+  };
+
+  findAndUpdateItem(treeData1);
+
+  return treeData1;
+};
+
+app.post("/update-node-tree", async (req, res) => {
+  await db.read();
+
+  const modified = updateItem(req.body, db.data.recipeTemplate);
+  db.data.recipeTemplate = modified;
+
+  await db.write();
+  res.status(200).send();
+});
+
 app.post("/generate", async function (req, res, next) {
   // console.log("req", req.body);
   try {
