@@ -19,10 +19,10 @@ const db = new Low(adapter);
 
 // Read data from JSON file, this will set db.data content
 await db.read();
-  
+
 console.log(db.data);
-if(!db.data){
-  db.data ||= { recipeTemplate: [] } 
+if (!db.data) {
+  db.data ||= { recipeTemplate: [] };
   await db.write();
 }
 
@@ -38,6 +38,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.get("/", function (req, res) {
 //   res.sendFile(path.join(__dirname, "public", "index.html"));
 // });
+
+app.get("/template-tree", (req, res) => {
+  console.log("db.data", db.data);
+
+  res.status(200).send(db.data.recipeTemplate);
+});
 
 app.post("/generate", async function (req, res, next) {
   // console.log("req", req.body);
