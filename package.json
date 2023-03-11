@@ -2,10 +2,12 @@
   "name": "email-template-editor-nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "exports": "./app.js",
+  "node": ">=14.16",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./app.js",
+    "start": "nodemon ./app.js --ignore ./db.json",
     "start:prod": "node ./app.js"
   },
   "repository": {
@@ -19,8 +21,9 @@
   },
   "homepage": "https://github.com/LLazyEmail/email-template-editor-nodejs#readme",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "4.18.2"
+    "cors": "2.8.5",
+    "express": "4.18.2",
+    "lowdb": "5.1.0"
   },
   "devDependencies": {
     "nodemon": "2.0.20"
