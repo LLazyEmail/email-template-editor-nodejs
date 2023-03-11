@@ -1,6 +1,6 @@
 const getValue = (children, parentValue) => {
   if (!children?.length) {
-    return "";
+    return parentValue;
   }
 
   let parentValueTmp = parentValue;

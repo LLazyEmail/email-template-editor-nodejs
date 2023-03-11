@@ -40,9 +40,19 @@ app.use(express.static(path.join(__dirname, "public")));
 // });
 
 app.get("/template-tree", (req, res) => {
-  console.log("db.data", db.data);
-
   res.status(200).send(db.data.recipeTemplate);
+});
+
+app.post("/save-template-tree", async (req, res) => {
+  if (!req.body.treeData) {
+    res.status(400).send();
+    return;
+  }
+
+  await db.read();
+  db.data.recipeTemplate = req.body.treeData;
+  await db.write();
+  res.status(200).send();
 });
 
 app.post("/generate", async function (req, res, next) {

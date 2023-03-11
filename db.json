@@ -2,41 +2,9 @@
   "recipeTemplate": [
     {
       "title": "root",
-      "key": "0-0",
-      "value": "<!DOCTYPE html>\n      <html lang=\"en\">\n        <head>\n          <meta charset=\"UTF-8\" />\n          <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n          <title>Document</title>\n        </head>\n        <body>\n          <div>{{items}}</div>\n        </body>\n      </html>",
-      "children": [
-        {
-          "title": "{{items}}",
-          "key": "0-0-0",
-          "value": "{{oneBlock}}\n          {{twoBlocks}}\n          {{anotherBlock}}",
-          "children": [
-            {
-              "title": "{{oneBlock}}",
-              "value": "<div><img src=\"https://raw.githubusercontent.com/LLazyEmail/nomoretogo_email_template/main/data/images/logo.jpeg\" id=\"logoBlock-4\" border=\"0\" alt=\"\" width=\"560\" style=\"display: block;\"></div>",
-              "key": "0-0-0-0",
-              "children": []
-            },
-            {
-              "title": "{{twoBlocks}}",
-              "value": "<div>\n              <div>first block</div>\n              <div>second block</div>\n              </div>",
-              "key": "0-0-0-1",
-              "children": []
-            },
-            {
-              "key": "0-0-0-2",
-              "title": "{{anotherBlock}}",
-              "value": "{{href}}{{text}}{{image}}",
-              "children": [
-                {
-                  "key": "0-0-0-0-0",
-                  "title": "{{href}}",
-                  "value": "https://example.com"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "key": "1",
+      "value": "1234",
+      "children": []
     }
   ]
 }
