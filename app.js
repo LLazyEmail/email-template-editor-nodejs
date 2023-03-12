@@ -60,6 +60,7 @@ const updateItem = (itemToUpdate1, treeData1) => {
     treeData.forEach((item) => {
       if (item.key === itemToUpdate1.key) {
         item.value = itemToUpdate1.value;
+        item.title = itemToUpdate1.title;
       }
 
       if (!item.children) {
@@ -81,6 +82,36 @@ app.post("/update-node-tree", async (req, res) => {
   const modified = updateItem(req.body, db.data.recipeTemplate);
   db.data.recipeTemplate = modified;
 
+  await db.write();
+  res.status(200).send();
+});
+
+const addNodeTree = (itemToAdd1, treeData1, parentKey) => {
+  const findAndAddItem = (treeData) => {
+    treeData.forEach((item) => {
+      if (item.key === parentKey) {
+        item.children.push(itemToAdd1);
+      }
+
+      if (!item.children) {
+        return;
+      }
+
+      findAndAddItem(item.children);
+    });
+  };
+
+  findAndAddItem(treeData1);
+
+  return treeData1;
+};
+
+app.post("/add-node-tree", async (req, res) => {
+  await db.read();
+
+  const { parentKey, item } = req.body;
+  const modified = addNodeTree(item, db.data.recipeTemplate, parentKey);
+  db.data.recipeTemplate = modified;
   await db.write();
   res.status(200).send();
 });
