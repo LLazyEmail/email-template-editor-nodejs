@@ -129,6 +129,7 @@ const addNodeTree = (itemToAdd1, treeData1, parentKey) => {
     treeData.forEach((item) => {
       if (item.key === parentKey) {
         item.children.push(itemToAdd1);
+        // if(item.)
       }
 
       if (!item.children) {
@@ -157,7 +158,8 @@ app.post("/add-node-tree", async (req, res) => {
 app.post("/generate", async function (req, res, next) {
   // console.log("req", req.body);
   try {
-    const generatedHTML = generateHTML(req.body.treeData);
+    await db.read();
+    const generatedHTML = generateHTML(db.data.recipeTemplate);
 
     await fs.writeFile(
       path.join(__dirname, "public/generated/nmtgTemplate.html"),
