@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // });
 
 app.get("/template-tree", (req, res) => {
-  res.status(200).send(db.data.recipeTemplate);
+  res.status(200).send(db.data.recipeTemplate.tree);
 });
 
 app.post("/save-template-tree", async (req, res) => {
@@ -52,7 +52,7 @@ app.post("/save-template-tree", async (req, res) => {
   }
 
   await db.read();
-  db.data.recipeTemplate = req.body.treeData;
+  db.data.recipeTemplate.tree = req.body.treeData;
   await db.write();
   res.status(200).send();
 });
@@ -60,8 +60,8 @@ app.post("/save-template-tree", async (req, res) => {
 app.post("/update-node-tree", async (req, res) => {
   await db.read();
 
-  const modified = updateItem(req.body, db.data.recipeTemplate);
-  db.data.recipeTemplate = modified;
+  const modified = updateItem(req.body, db.data.recipeTemplate.tree);
+  db.data.recipeTemplate.tree = modified;
 
   await db.write();
   res.status(200).send();
@@ -70,8 +70,8 @@ app.post("/update-node-tree", async (req, res) => {
 app.post("/delete-node-tree", async (req, res) => {
   await db.read();
 
-  const modified = deleteItem(req.body.key, db.data.recipeTemplate);
-  db.data.recipeTemplate = modified;
+  const modified = deleteItem(req.body.key, db.data.recipeTemplate.tree);
+  db.data.recipeTemplate.tree = modified;
 
   await db.write();
   res.status(200).send();
@@ -81,8 +81,8 @@ app.post("/add-node-tree", async (req, res) => {
   await db.read();
 
   const { parentKey, item } = req.body;
-  const modified = addNodeTree(item, db.data.recipeTemplate, parentKey);
-  db.data.recipeTemplate = modified;
+  const modified = addNodeTree(item, db.data.recipeTemplate.tree, parentKey);
+  db.data.recipeTemplate.tree = modified;
   await db.write();
   res.status(200).send();
 });
@@ -91,7 +91,7 @@ app.post("/generate", async function (req, res, next) {
   // console.log("req", req.body);
   try {
     await db.read();
-    const generatedHTML = generateHTML(db.data.recipeTemplate);
+    const generatedHTML = generateHTML(db.data.recipeTemplate.tree);
 
     await fs.writeFile(
       path.join(__dirname, "public/generated/nmtgTemplate.html"),
@@ -107,6 +107,10 @@ app.post("/generate", async function (req, res, next) {
   // }
 
   res.status(200).send();
+});
+
+app.get("/all-elements", (req, res) => {
+  res.status(200).send({ value: "hello" });
 });
 
 app.listen(port, () => {
