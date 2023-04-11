@@ -109,8 +109,22 @@ app.post("/generate", async function (req, res, next) {
   res.status(200).send();
 });
 
-app.get("/all-elements", (req, res) => {
-  res.status(200).send({ value: "hello" });
+app.get("/all-elements", async (req, res) => {
+  await db.read();
+
+  res.status(200).send(db.data.recipeTemplate.options);
+});
+
+app.post("/add-element", async (req, res) => {
+  await db.read();
+
+  console.log("call add element");
+
+  const { key, title, value } = req.body;
+
+  db.data.recipeTemplate.options.push({ key, title, value });
+  await db.write();
+  res.status(200).send();
 });
 
 app.listen(port, () => {
