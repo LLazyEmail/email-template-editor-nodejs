@@ -6,7 +6,9 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
-
+import { deleteItem } from "./src/treeHelpers/deleteItem.js";
+import { updateItem } from "./src/treeHelpers/updateItem.js";
+import { addNodeTree } from "./src/treeHelpers/addItem.js";
 import { generateHTML } from "./src/generateHTML.js";
 
 // File path
@@ -29,7 +31,7 @@ if (!db.data) {
 const app = express();
 
 app.use(cors());
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: "50mb" }));
 
 const port = 9000;
 
@@ -55,27 +57,6 @@ app.post("/save-template-tree", async (req, res) => {
   res.status(200).send();
 });
 
-const updateItem = (itemToUpdate1, treeData1) => {
-  const findAndUpdateItem = (treeData) => {
-    treeData.forEach((item) => {
-      if (item.key === itemToUpdate1.key) {
-        item.value = itemToUpdate1.value;
-        item.title = itemToUpdate1.title;
-      }
-
-      if (!item.children) {
-        return;
-      }
-
-      findAndUpdateItem(item.children);
-    });
-  };
-
-  findAndUpdateItem(treeData1);
-
-  return treeData1;
-};
-
 app.post("/update-node-tree", async (req, res) => {
   await db.read();
 
@@ -86,34 +67,6 @@ app.post("/update-node-tree", async (req, res) => {
   res.status(200).send();
 });
 
-const deleteItem = (itemKey, treeData1) => {
-  const findAndDeleteItem = (treeData) => {
-    const foundElement = treeData.find((item) => {
-      if (item.key === itemKey) {
-        return true;
-      }
-
-      if (!item.children) {
-        return false;
-      }
-
-      return findAndDeleteItem(item.children);
-    });
-
-    if (foundElement) {
-      console.log("found", foundElement);
-      const index = treeData.indexOf(foundElement);
-      if (index > -1) {
-        treeData.splice(index, 1);
-      }
-    }
-  };
-
-  findAndDeleteItem(treeData1);
-
-  return treeData1;
-};
-
 app.post("/delete-node-tree", async (req, res) => {
   await db.read();
 
@@ -123,27 +76,6 @@ app.post("/delete-node-tree", async (req, res) => {
   await db.write();
   res.status(200).send();
 });
-
-const addNodeTree = (itemToAdd1, treeData1, parentKey) => {
-  const findAndAddItem = (treeData) => {
-    treeData.forEach((item) => {
-      if (item.key === parentKey) {
-        item.children.push(itemToAdd1);
-        // if(item.)
-      }
-
-      if (!item.children) {
-        return;
-      }
-
-      findAndAddItem(item.children);
-    });
-  };
-
-  findAndAddItem(treeData1);
-
-  return treeData1;
-};
 
 app.post("/add-node-tree", async (req, res) => {
   await db.read();
