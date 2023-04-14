@@ -117,12 +117,48 @@ app.get("/all-elements", async (req, res) => {
 
 app.post("/add-element", async (req, res) => {
   await db.read();
-
-  console.log("call add element");
-
   const { key, title, value } = req.body;
 
   db.data.recipeTemplate.options.push({ key, title, value });
+  await db.write();
+  res.status(200).send();
+});
+
+app.delete("/delete-element", async (req, res) => {
+  await db.read();
+
+  const { key } = req.body;
+  const foundIndexOfElement = db.data.recipeTemplate.options.findIndex(
+    (item) => item.key === key
+  );
+  if (!foundIndexOfElement || foundIndexOfElement === -1) {
+    res.status(404).send(`Element with key: ${key} not found`);
+    return;
+  }
+
+  db.data.recipeTemplate.options.splice(foundIndexOfElement, 1);
+  await db.write();
+  res.status(200).send();
+});
+
+app.put("/element", async (req, res) => {
+  await db.read();
+
+  const { key, ...data } = req.body;
+
+  const foundIndexOfElement = db.data.recipeTemplate.options.findIndex(
+    (item) => item.key === key
+  );
+  if (foundIndexOfElement === -1) {
+    res.status(404).send(`Element with key: ${key} not found`);
+    return;
+  }
+
+  db.data.recipeTemplate.options[foundIndexOfElement] = {
+    key,
+    ...data,
+  };
+
   await db.write();
   res.status(200).send();
 });
