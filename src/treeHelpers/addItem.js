@@ -3,7 +3,6 @@ const addNodeTree = (itemToAdd1, treeData1, parentKey) => {
     treeData.forEach((item) => {
       if (item.key === parentKey) {
         item.children.push(itemToAdd1);
-        // if(item.)
       }
 
       if (!item.children) {

@@ -124,10 +124,12 @@ app.post("/add-element", async (req, res) => {
   res.status(200).send();
 });
 
-app.delete("/delete-element", async (req, res) => {
+app.delete("/delete-element/:key", async (req, res) => {
   await db.read();
 
-  const { key } = req.body;
+  const { key } = req.params
+  
+  console.log("req", req.params);;
   const foundIndexOfElement = db.data.recipeTemplate.options.findIndex(
     (item) => item.key === key
   );
