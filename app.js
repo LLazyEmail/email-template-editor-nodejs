@@ -133,7 +133,7 @@ app.delete("/delete-element/:key", async (req, res) => {
   const foundIndexOfElement = db.data.recipeTemplate.options.findIndex(
     (item) => item.key === key
   );
-  if (!foundIndexOfElement || foundIndexOfElement === -1) {
+  if (foundIndexOfElement === -1) {
     res.status(404).send(`Element with key: ${key} not found`);
     return;
   }
