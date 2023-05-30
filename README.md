@@ -1,13 +1,15 @@
 ### Running in Docker
 
-Production build and run:
+#### Production build and run:
 
 ```
 docker build -t email-template-editor-nodejs-v-0-0-6 .
 docker run -dp 9000:9000 email-template-editor-nodejs-v-0-0-6
 ```
 
-Development (without buiding image container): 
+---
+
+#### Development (without buiding image container): 
 
 ```
 docker run -dp 9000:9000 \
@@ -16,7 +18,9 @@ docker run -dp 9000:9000 \
     sh -c "npm install && npm run start:dev"
 ```
 
-Running using docker compose for development:
+---
+
+#### Running using docker compose for development:
 
 ```
 docker compose up -d
