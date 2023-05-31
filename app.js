@@ -97,6 +97,12 @@ app.post("/generate", async function (req, res, next) {
       path.join(__dirname, "public/generated/nmtgTemplate.html"),
       generatedHTML
     );
+
+    let fullUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/generated/nmtgTemplate.html`;
+
+    res.status(200).send(fullUrl);
   } catch (err) {
     console.log(err);
   }
@@ -127,9 +133,9 @@ app.post("/add-element", async (req, res) => {
 app.delete("/delete-element/:key", async (req, res) => {
   await db.read();
 
-  const { key } = req.params
-  
-  console.log("req", req.params);;
+  const { key } = req.params;
+
+  console.log("req", req.params);
   const foundIndexOfElement = db.data.recipeTemplate.options.findIndex(
     (item) => item.key === key
   );
