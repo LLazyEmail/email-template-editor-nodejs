@@ -3,7 +3,7 @@
 REST API for the [LLazyEmail email template editor](https://github.com/LLazyEmail/email-template-editor-reactjs).
 It stores a tree of template parts and reusable elements, and renders the tree into a single HTML email.
 
-Stack: Node 22, TypeScript (strict), Express 5, zod, pino, Vitest + Supertest.
+Stack: Node 24, TypeScript (strict), Express 5, zod, pino, Vitest + Supertest.
 
 ## Quick start
 
@@ -22,6 +22,7 @@ npm run dev            # http://localhost:9000, hot reload, pretty logs
 | `npm run typecheck` | `tsc --noEmit`                             |
 | `npm run lint`      | ESLint                                     |
 | `npm run format`    | Prettier (`format:check` is used in CI)    |
+| `npm run openapi`   | Regenerate `openapi.json` from the schemas |
 
 ## Architecture
 
@@ -68,6 +69,8 @@ Dependencies are passed through constructors and wired in `routes.ts`, so every 
 Invalid values stop the server at startup with a clear message.
 
 ## API
+
+The machine-readable contract is [`openapi.json`](openapi.json) (OpenAPI 3.1, generated from the zod schemas, also served at `GET /openapi.json`). Agents and contributors: see [`AGENTS.md`](AGENTS.md).
 
 | Method | Path               | Body                       | Success                     | Errors        |
 | ------ | ------------------ | -------------------------- | --------------------------- | ------------- |
