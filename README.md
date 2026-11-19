@@ -143,6 +143,15 @@ docker run -d -p 9000:9000 -v email-template-data:/app/data email-template-edito
 
 Data lives in `/app/data/db.json`. Mount a volume there so it survives container re-creation. The image is seeded with the repository's `db.json`.
 
+### Sample data
+
+The repository's `db.json` holds a complete example: a No More To-Go "Weekly Menu" issue.
+
+- **Tree:** the root HTML has three slots (`{{items}}`, `{{items2}}`, `{{items3}}`). Each slot holds a two-column row with two recipe cards, six recipes in total. Each card's `{{link}}`, `{{image}}`, `{{title}}` and `{{subtitle}}` are filled.
+- **Elements:** `{{twoBlocks}}` (two-column row), `{{recipeCard}}` (photo, title and subtitle) and `{{textBlock}}` (a paragraph).
+
+Every child's title appears in its parent's HTML, and keys are unique. `POST /generate` renders the issue with no placeholders left over.
+
 Development with hot reload:
 
 ```bash
