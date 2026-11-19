@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Editor UI issue
+    url: https://github.com/LLazyEmail/email-template-editor-reactjs/issues
+    about: Problems in the editor interface belong to the frontend repository.

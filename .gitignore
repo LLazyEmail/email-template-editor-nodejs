@@ -3,3 +3,6 @@ dist
 coverage
 .env
 *.tmp
+
+# Claude Code: personal overrides (shared settings are in .claude/settings.json)
+.claude/settings.local.json

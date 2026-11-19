@@ -1,7 +1,7 @@
 # Development: runs the API with hot reload against the local db.json
 services:
   api:
-    image: node:22-alpine
+    image: node:24-alpine
     command: sh -c "npm ci && npm run dev"
     working_dir: /app
     environment:

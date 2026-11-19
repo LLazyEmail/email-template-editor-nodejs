@@ -8,6 +8,7 @@ import { GenerateService } from "./modules/generate/generate.service.js";
 import { TreeController } from "./modules/tree/tree.controller.js";
 import { createTreeRouter } from "./modules/tree/tree.router.js";
 import { TreeService } from "./modules/tree/tree.service.js";
+import { buildOpenApiDocument } from "./openapi.js";
 import type { TemplateStore } from "./storage/template-store.js";
 
 export interface RouteDeps {
@@ -21,6 +22,11 @@ export function createRoutes({ store, publicDir }: RouteDeps): Router {
 
   router.get("/health", (_req, res) => {
     res.json({ status: "ok" });
+  });
+
+  const openApiDocument = buildOpenApiDocument();
+  router.get("/openapi.json", (_req, res) => {
+    res.json(openApiDocument);
   });
 
   router.use("/tree", createTreeRouter(new TreeController(new TreeService(store))));
