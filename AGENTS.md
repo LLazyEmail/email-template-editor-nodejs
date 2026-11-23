@@ -69,3 +69,4 @@ request → helmet → cors → request-id → pino-http → json → static
 - Do not commit `.env` or real data in `db.json` (it is sample data that seeds the Docker image).
 - Do not add routes without schemas, tests and an `openapi.json` update.
 - Do not change the error shape or route paths without a matching frontend change.
+- Do not upgrade to TypeScript 7 yet: typescript-eslint does not support it. Renovate (`renovate.json`) holds `typescript` at `<7` and `@types/node` at the `.nvmrc` major.

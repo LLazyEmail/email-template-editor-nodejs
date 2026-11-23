@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "typescript-eslint supports TypeScript <6.1 only. Remove once it supports TypeScript 7.1: https://github.com/typescript-eslint/typescript-eslint/issues/10940",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    },
+    {
+      "description": "Types follow the Node major in .nvmrc.",
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<25"
+    },
+    {
+      "groupName": "Express",
+      "matchPackageNames": ["express", "@types/express", "cors", "@types/cors", "helmet"]
+    },
+    {
+      "groupName": "pino",
+      "matchPackageNames": ["pino", "pino-http", "pino-pretty"]
+    },
+    {
+      "groupName": "Vitest and supertest",
+      "matchPackageNames": ["vitest", "@vitest/**", "supertest", "@types/supertest"]
+    },
+    {
+      "groupName": "ESLint and Prettier",
+      "matchPackageNames": ["eslint", "@eslint/js", "typescript-eslint", "prettier"]
+    },
+    {
+      "groupName": "GitHub Actions",
+      "matchManagers": ["github-actions"]
+    },
+    {
+      "description": "Patch updates of dev tooling merge on green CI.",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    }
+  ]
+}
