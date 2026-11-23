@@ -36,7 +36,7 @@ request → helmet → cors → request-id → pino-http → json → static
 
 ## API contract
 
-- **Source of truth:** [`openapi.json`](openapi.json), generated from the zod schemas and served at `GET /openapi.json`. `test/openapi.test.ts` fails if the committed file is stale or documents a route the app does not have.
+- **Source of truth:** [`openapi.json`](openapi.json), generated from the zod schemas and served at `GET /openapi.json`. `test/openapi.test.ts` fails if the committed file is stale, documents a route the app does not have, or misses a route the app has.
 - The frontend's request types (`src/api/main.types.ts` in the frontend repo) must match it. A breaking change here needs a matching frontend PR.
 - Errors are always `{ error: { code, message, details?, requestId } }` (see `src/common/middleware/error-handler.ts`).
 - Keys in paths are URL-encoded by the client.

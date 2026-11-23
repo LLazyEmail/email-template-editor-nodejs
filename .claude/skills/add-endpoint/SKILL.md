@@ -16,7 +16,7 @@ Follow the layers in order. Look at `src/modules/elements/` as the reference mod
 7. **Tests**
    - HTTP: `test/app.test.ts` with Supertest — success status and body, 400 for invalid input, 404/409 where they apply, and that `db.json` changed as expected.
    - Pure logic (helpers): `*.test.ts` next to the code.
-   - `test/openapi.test.ts` fails until `openapi.json` is regenerated and catches documented routes that do not exist.
+   - `test/openapi.test.ts` fails until `openapi.json` is regenerated, catches documented routes that do not exist, and catches routes missing from `buildOpenApiDocument()`.
 8. **Docs** — the endpoint table in `README.md`.
 9. **Frontend** — if the shape or path changed, the frontend's `src/api/main.ts` and `main.types.ts` need a matching PR in `email-template-editor-reactjs`.
 
